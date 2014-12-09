@@ -1,0 +1,10 @@
+config BOARD_HEADER_FILE
+	string "LGE board specific header file name"
+	default ""
+
+config MACH_APQ8064_PALMAN
+	depends on ARCH_APQ8064
+	select MACH_LGE
+	bool "APQ8064 Palman Device"
+	help
+	  Support for the LGE Palman device.
