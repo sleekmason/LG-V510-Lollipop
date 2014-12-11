@@ -581,7 +581,7 @@ static struct mxt_platform_data touch_mxt1188S_pdata = {
 	.ghost_detection_enable = 0,
 #endif
 #ifdef CONFIG_TOUCHSCREEN_ATMEL_KNOCK_ON
-	.knock_on_enable = false,
+	.knock_on_enable = true,
 #endif
 	.smart_cover_enable = true,
 };
