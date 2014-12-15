@@ -199,7 +199,7 @@ on post-fs-data
     rm /data/local/tmp/adreno_config.txt
 
     # Disable the hotspot option in Settings
-    setprop ro.tether.denied true
+    setprop ro.tether.denied false
 
     # LED On/Off synchronization
     chown system system /sys/class/leds/red/device/lock
