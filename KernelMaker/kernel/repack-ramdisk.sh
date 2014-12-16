@@ -30,12 +30,12 @@ if [ "$found" != 'run-parts /system/etc/init.d' ]; then
 fi
 
 # Modify data mode with writeback instead default mount option
-line_no=$(sed -n "/by-name\/system/ =" fstab.mako)
-sed -i "$line_no c\/dev\/block\/platform\/msm_sdcc.1\/by-name\/system       \/system         ext4    ro,barrier=1,data=writeback                                      wait" fstab.mako
-line_no=$(sed -n "/by-name\/cache/ =" fstab.mako)
-sed -i "$line_no c\/dev\/block\/platform\/msm_sdcc.1\/by-name\/cache        \/cache          ext4    noatime,nosuid,nodev,barrier=1,data=writeback                    wait,check" fstab.mako
-line_no=$(sed -n "/by-name\/userdata/ =" fstab.mako)
-sed -i "$line_no c\/dev\/block\/platform\/msm_sdcc.1\/by-name\/userdata     \/data           ext4    noatime,nosuid,nodev,barrier=1,data=writeback,noauto_da_alloc    wait,check,encryptable=\/dev\/block\/platform\/msm_sdcc.1\/by-name\/metadata" fstab.mako
+#line_no=$(sed -n "/by-name\/system/ =" fstab.mako)
+#sed -i "$line_no c\/dev\/block\/platform\/msm_sdcc.1\/by-name\/system       \/system         ext4    ro,barrier=1,data=writeback                                      wait" fstab.mako
+#line_no=$(sed -n "/by-name\/cache/ =" fstab.mako)
+#sed -i "$line_no c\/dev\/block\/platform\/msm_sdcc.1\/by-name\/cache        \/cache          ext4    noatime,nosuid,nodev,barrier=1,data=writeback                    wait,check" fstab.mako
+#line_no=$(sed -n "/by-name\/userdata/ =" fstab.mako)
+#sed -i "$line_no c\/dev\/block\/platform\/msm_sdcc.1\/by-name\/userdata     \/data           ext4    noatime,nosuid,nodev,barrier=1,data=writeback,noauto_da_alloc    wait,check,encryptable=\/dev\/block\/platform\/msm_sdcc.1\/by-name\/metadata" fstab.mako
 
 find . | cpio -o -H newc | gzip > ../newramdisk.cpio.gz
 cd /
