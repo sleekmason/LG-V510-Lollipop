@@ -5,7 +5,7 @@
 menu "Misc devices"
 
 config GAMMA_CONTROL
-	tristate "Palman Gamma Control"
+	tristate "Mako Gamma Control"
 	default y
 
 config SENSORS_LIS3LV02D

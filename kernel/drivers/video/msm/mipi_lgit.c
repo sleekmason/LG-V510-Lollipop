@@ -126,6 +126,7 @@ static int mipi_lgit_lcd_on(struct platform_device *pdev)
 		return ret;
 	}
 
+	kcal_refresh_values();
 	pr_info("%s finished\n", __func__);
 	return 0;
 }
@@ -236,7 +237,7 @@ static void mipi_lgit_set_backlight_board(struct msm_fb_data_type *mfd)
 #define BRIGHTNESS 6
 #define SATURATION 7
 
-extern void update_vals(int type, int array_pos, int val)
+void update_vals(int type, int array_pos, int val)
 {
 	int i;
 
