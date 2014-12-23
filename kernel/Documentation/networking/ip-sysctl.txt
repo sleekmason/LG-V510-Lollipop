@@ -1097,6 +1097,11 @@ accept_ra_pinfo - BOOLEAN
 	Functional default: enabled if accept_ra is enabled.
 			    disabled if accept_ra is disabled.
 
+accept_ra_prefix_route - BOOLEAN
+	Set the prefix route for the autoconfigured interface address
+
+	Functional default: enabled
+
 accept_ra_rt_info_max_plen - INTEGER
 	Maximum prefix length of Route Information in RA.
 
