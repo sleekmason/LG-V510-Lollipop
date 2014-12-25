@@ -4,10 +4,6 @@
 
 menu "Misc devices"
 
-config GAMMA_CONTROL
-	tristate "Mako Gamma Control"
-	default y
-
 config SENSORS_LIS3LV02D
 	tristate
 	depends on INPUT
