@@ -98,27 +98,27 @@
 #define MSM_PMEM_ADSP_SIZE         0x7800000
 #define MSM_PMEM_AUDIO_SIZE        0x4CF000
 #ifdef CONFIG_FB_MSM_HDMI_AS_PRIMARY
-#define MSM_PMEM_SIZE 0x4000000 /* 64 Mbytes */
+#define MSM_PMEM_SIZE 0x4000000 /*           */
 #else
-#define MSM_PMEM_SIZE 0x4000000 /* 64 Mbytes */
+#define MSM_PMEM_SIZE 0x4000000 /*           */
 #endif
 
 #ifdef CONFIG_MSM_MULTIMEDIA_USE_ION
 #define HOLE_SIZE		0x20000
-#define MSM_ION_MFC_META_SIZE  0x40000 /* 256 Kbytes */
+#define MSM_ION_MFC_META_SIZE  0x40000 /*            */
 #define MSM_CONTIG_MEM_SIZE  0x65000
 #ifdef CONFIG_MSM_IOMMU
-#define MSM_ION_MM_SIZE		0x7300000 //came from g ics for stability issue org : 0x3800000
+#define MSM_ION_MM_SIZE		0x5F00000 //                                                   
 #define MSM_ION_SF_SIZE		0
-#define MSM_ION_QSECOM_SIZE	0x780000 /* (7.5MB) */
+#define MSM_ION_QSECOM_SIZE	0x780000 /*         */
 #define MSM_ION_HEAP_NUM	8
 #else
 #define MSM_ION_MM_SIZE		MSM_PMEM_ADSP_SIZE
 #define MSM_ION_SF_SIZE		MSM_PMEM_SIZE
-#define MSM_ION_QSECOM_SIZE	0x600000 /* (6MB) */
+#define MSM_ION_QSECOM_SIZE	0x600000 /*       */
 #define MSM_ION_HEAP_NUM	8
 #endif
-#define MSM_ION_MM_FW_SIZE	(0x200000 - HOLE_SIZE) /* (2MB - 128KB) */
+#define MSM_ION_MM_FW_SIZE	(0x200000 - HOLE_SIZE) /*               */
 #define MSM_ION_MFC_SIZE	(SZ_8K + MSM_ION_MFC_META_SIZE)
 #define MSM_ION_AUDIO_SIZE	MSM_PMEM_AUDIO_SIZE
 #else
@@ -214,8 +214,8 @@ static struct platform_device apq8064_android_pmem_audio_device = {
 	.id = 4,
 	.dev = { .platform_data = &android_pmem_audio_pdata },
 };
-#endif /* CONFIG_MSM_MULTIMEDIA_USE_ION */
-#endif /* CONFIG_ANDROID_PMEM */
+#endif /*                               */
+#endif /*                     */
 
 #ifdef CONFIG_BATTERY_BCL
 static struct platform_device battery_bcl_device = {
@@ -253,8 +253,8 @@ static void __init size_pmem_devices(void)
 	android_pmem_adsp_pdata.size = pmem_adsp_size;
 	android_pmem_pdata.size = pmem_size;
 	android_pmem_audio_pdata.size = MSM_PMEM_AUDIO_SIZE;
-#endif /*CONFIG_MSM_MULTIMEDIA_USE_ION*/
-#endif /*CONFIG_ANDROID_PMEM*/
+#endif /*                             */
+#endif /*                   */
 }
 
 #ifdef CONFIG_ANDROID_PMEM
@@ -263,8 +263,8 @@ static void __init reserve_memory_for(struct android_pmem_platform_data *p)
 {
 	apq8064_reserve_table[p->memory_type].size += p->size;
 }
-#endif /*CONFIG_MSM_MULTIMEDIA_USE_ION*/
-#endif /*CONFIG_ANDROID_PMEM*/
+#endif /*                             */
+#endif /*                   */
 
 static void __init reserve_pmem_memory(void)
 {
@@ -273,9 +273,9 @@ static void __init reserve_pmem_memory(void)
 	reserve_memory_for(&android_pmem_adsp_pdata);
 	reserve_memory_for(&android_pmem_pdata);
 	reserve_memory_for(&android_pmem_audio_pdata);
-#endif /*CONFIG_MSM_MULTIMEDIA_USE_ION*/
+#endif /*                             */
 	apq8064_reserve_table[MEMTYPE_EBI1].size += msm_contig_mem_size;
-#endif /*CONFIG_ANDROID_PMEM*/
+#endif /*                   */
 }
 
 static int apq8064_paddr_to_memtype(unsigned int paddr)
@@ -339,16 +339,16 @@ static struct platform_device ion_adsp_heap_device = {
 		.coherent_dma_mask = DMA_BIT_MASK(32),
 	}
 };
-/**
- * These heaps are listed in the order they will be allocated. Due to
- * video hardware restrictions and content protection the FW heap has to
- * be allocated adjacent (below) the MM heap and the MFC heap has to be
- * allocated after the MM heap to ensure MFC heap is not more than 256MB
- * away from the base address of the FW heap.
- * However, the order of FW heap and MM heap doesn't matter since these
- * two heaps are taken care of by separate code to ensure they are adjacent
- * to each other.
- * Don't swap the order unless you know what you are doing!
+/* 
+                                                                     
+                                                                        
+                                                                       
+                                                                        
+                                             
+                                                                       
+                                                                           
+                 
+                                                           
  */
 struct ion_platform_heap apq8064_heaps[] = {
 		{
@@ -467,17 +467,17 @@ static void __init apq8064_reserve_fixed_area(unsigned long fixed_area_size)
 #endif
 }
 
-/**
- * Reserve memory for ION and calculate amount of reusable memory for fmem.
- * We only reserve memory for heaps that are not reusable. However, we only
- * support one reusable heap at the moment so we ignore the reusable flag for
- * other than the first heap with reusable flag set. Also handle special case
- * for video heaps (MM,FW, and MFC). Video requires heaps MM and MFC to be
- * at a higher address than FW in addition to not more than 256MB away from the
- * base address of the firmware. This means that if MM is reusable the other
- * two heaps must be allocated in the same region as FW. This is handled by the
- * mem_is_fmem flag in the platform data. In addition the MM heap must be
- * adjacent to the FW heap for content protection purposes.
+/* 
+                                                                           
+                                                                           
+                                                                             
+                                                                             
+                                                                          
+                                                                               
+                                                                            
+                                                                               
+                                                                         
+                                                           
  */
 static void __init reserve_ion_memory(void)
 {
@@ -521,7 +521,7 @@ static void __init reserve_ion_memory(void)
 				break;
 			case ION_HEAP_TYPE_DMA:
 				use_cma = 1;
-				/* Purposely fall through here */
+				/*                             */
 			case ION_HEAP_TYPE_CARVEOUT:
 				fixed_position = ((struct ion_co_heap_pdata *)
 					heap->extra_data)->fixed_position;
@@ -546,9 +546,9 @@ static void __init reserve_ion_memory(void)
 				high_use_cma = use_cma;
 			} else if (use_cma) {
 				/*
-				 * Heaps that use CMA but are not part of the
-				 * fixed set. Create wherever.
-				 */
+                                                 
+                                  
+     */
 				dma_declare_contiguous(
 					heap->priv,
 					heap->size,
@@ -563,10 +563,10 @@ static void __init reserve_ion_memory(void)
 		return;
 
 	/*
-	 * Given the setup for the fixed area, we can't round up all sizes.
-	 * Some sizes must be set up exactly and aligned correctly. Incorrect
-	 * alignments are considered a configuration issue
-	 */
+                                                                    
+                                                                      
+                                                   
+  */
 
 	fixed_low_start = APQ8064_FIXED_AREA_START;
 	if (low_use_cma) {
@@ -594,7 +594,7 @@ static void __init reserve_ion_memory(void)
 		fixed_high_size = ALIGN(fixed_high_size, cma_alignment);
 		BUG_ON(!IS_ALIGNED(fixed_high_start, cma_alignment));
 	} else {
-		/* This is the end of the fixed area so it's okay to round up */
+		/*                                                            */
 		fixed_high_size = ALIGN(fixed_high_size, SECTION_SIZE);
 		ret = memblock_remove(fixed_high_start, fixed_high_size);
 		BUG_ON(ret);
@@ -720,7 +720,7 @@ static void __init apq8064_early_reserve(void)
 	reserve_info = &apq8064_reserve_info;
 }
 #ifdef CONFIG_USB_EHCI_MSM_HSIC
-/* Bandwidth requests (zero) if no vote placed */
+/*                                             */
 static struct msm_bus_vectors hsic_init_vectors[] = {
 	{
 		.src = MSM_BUS_MASTER_SPS,
@@ -730,13 +730,13 @@ static struct msm_bus_vectors hsic_init_vectors[] = {
 	},
 };
 
-/* Bus bandwidth requests in Bytes/sec */
+/*                                     */
 static struct msm_bus_vectors hsic_max_vectors[] = {
 	{
 		.src = MSM_BUS_MASTER_SPS,
 		.dst = MSM_BUS_SLAVE_SPS,
 		.ab = 0,
-		.ib = 256000000, /*vote for 32Mhz dfab clk rate*/
+		.ib = 256000000, /*                            */
 	},
 };
 
@@ -800,11 +800,11 @@ static int usb_diag_update_pid_and_serial_num(uint32_t pid, const char *snum)
 
 	pr_debug("%s: dload:%p pid:%x serial_num:%s\n",
 				__func__, dload, pid, snum);
-	/* update pid */
+	/*            */
 	dload->magic_struct.pid = PID_MAGIC_ID;
 	dload->pid = pid;
 
-	/* update serial number */
+	/*                      */
 	dload->magic_struct.serial_num = 0;
 	if (!snum) {
 		memset(dload->serial_number, 0, SERIAL_NUMBER_LENGTH);
@@ -830,7 +830,7 @@ static struct platform_device android_usb_device = {
 	},
 };
 
-/* Bandwidth requests (zero) if no vote placed */
+/*                                             */
 static struct msm_bus_vectors usb_init_vectors[] = {
 	{
 		.src = MSM_BUS_MASTER_SPS,
@@ -840,13 +840,13 @@ static struct msm_bus_vectors usb_init_vectors[] = {
 	},
 };
 
-/* Bus bandwidth requests in Bytes/sec */
+/*                                     */
 static struct msm_bus_vectors usb_max_vectors[] = {
 	{
 		.src = MSM_BUS_MASTER_SPS,
 		.dst = MSM_BUS_SLAVE_EBI_CH0,
-		.ab = 60000000,		/* At least 480Mbps on bus. */
-		.ib = 960000000,	/* MAX bursts rate */
+		.ab = 60000000,		/*                          */
+		.ib = 960000000,	/*                 */
 	},
 };
 
@@ -868,12 +868,12 @@ static struct msm_bus_scale_pdata usb_bus_scale_pdata = {
 };
 
 static int phy_init_seq[] = {
-	0x38, 0x81, /* update DC voltage level */
-	0x24, 0x82, /* set pre-emphasis and rise/fall time */
+	0x38, 0x81, /*                         */
+	0x24, 0x82, /*                                     */
 	-1
 };
 
-#define PMIC_GPIO_DP		27    /* PMIC GPIO for D+ change */
+#define PMIC_GPIO_DP		27    /*                         */
 #define PMIC_GPIO_DP_IRQ	PM8921_GPIO_IRQ(PM8921_IRQ_BASE, PMIC_GPIO_DP)
 #define MSM_MPM_PIN_USB1_OTGSESSVLD	40
 
@@ -930,7 +930,7 @@ static bool msm_hsusb_vbus_power(bool on)
 	}
 	return 0;
 }
-#endif /* CONFIG_USB_OTG */
+#endif /*                */
 
 
 static struct msm_otg_platform_data msm_otg_pdata = {
@@ -973,14 +973,14 @@ static struct i2c_board_info smb349_charger_i2c_info[] __initdata = {
 };
 #endif
 
-/* Micbias setting is based on 8660 CDP/MTP/FLUID requirement
- * 4 micbiases are used to power various analog and digital
- * microphones operating at 1800 mV. Technically, all micbiases
- * can source from single cfilter since all microphones operate
- * at the same voltage level. The arrangement below is to make
- * sure all cfilters are exercised. LDO_H regulator ouput level
- * does not need to be as high as 2.85V. It is choosen for
- * microphone sensitivity purpose.
+/*                                                           
+                                                           
+                                                               
+                                                               
+                                                              
+                                                               
+                                                          
+                                  
  */
 static struct wcd9xxx_pdata apq8064_tabla20_platform_data = {
 	.slimbus_slave_device = {
@@ -1099,7 +1099,7 @@ static struct platform_device msm_device_iris_fm __devinitdata = {
 #endif
 
 #ifdef CONFIG_QSEECOM
-/* qseecom bus scaling */
+/*                     */
 static struct msm_bus_vectors qseecom_clks_init_vectors[] = {
 	{
 		.src = MSM_BUS_MASTER_ADM_PORT0,
@@ -1347,7 +1347,7 @@ static struct platform_device msm_tsens_device = {
 static struct msm_thermal_data msm_thermal_pdata = {
 	.sensor_id = 9,
 	.poll_ms = 250,
-	.limit_temp_degC = 60,
+	.limit_temp_degC = 75,
 	.temp_hysteresis_degC = 10,
 	.freq_step = 2,
 };
@@ -1423,7 +1423,7 @@ static struct msm_rpmrs_level msm_rpmrs_levels[] = {
 	},
 
 #ifdef CONFIG_LGE_USE_STANDALONE_POWER_COLLAPSE
-	/* QCT original code */
+	/*                   */
 	{
 		MSM_PM_SLEEP_MODE_POWER_COLLAPSE_STANDALONE,
 		MSM_RPMRS_LIMITS(ON, ACTIVE, MAX, ACTIVE),
@@ -1486,13 +1486,13 @@ static struct msm_rpmrs_platform_data msm_rpmrs_data __initdata = {
 		[MSM_RPMRS_VDD_MEM_RET_LOW]	= 750000,
 		[MSM_RPMRS_VDD_MEM_RET_HIGH]	= 750000,
 		[MSM_RPMRS_VDD_MEM_ACTIVE]	= 1050000,
-		[MSM_RPMRS_VDD_MEM_MAX]		= 1150000,
+		[MSM_RPMRS_VDD_MEM_MAX]		= 1250000,
 	},
 	.vdd_dig_levels = {
 		[MSM_RPMRS_VDD_DIG_RET_LOW]	= 500000,
 		[MSM_RPMRS_VDD_DIG_RET_HIGH]	= 750000,
 		[MSM_RPMRS_VDD_DIG_ACTIVE]	= 950000,
-		[MSM_RPMRS_VDD_DIG_MAX]		= 1150000,
+		[MSM_RPMRS_VDD_DIG_MAX]		= 1250000,
 	},
 	.vdd_mask = 0x7FFFFF,
 	.rpmrs_target_id = {
@@ -1536,7 +1536,7 @@ static uint8_t spm_power_collapse_with_rpm[] __initdata = {
 	0x24, 0x30, 0x0f,
 };
 
-/* 8064AB has a different command to assert apc_pdn */
+/*                                                  */
 static uint8_t spm_power_collapse_without_rpm_krait_v3[] __initdata = {
 	0x00, 0x24, 0x84, 0x10,
 	0x09, 0x03, 0x01,
@@ -1712,7 +1712,7 @@ static void __init apq8064ab_update_krait_spm(void)
 {
 	int i;
 
-	/* Update the SPM sequences for SPC and PC */
+	/*                                         */
 	for (i = 0; i < ARRAY_SIZE(msm_spm_data); i++) {
 		int j;
 		struct msm_spm_platform_data *pdata = &msm_spm_data[i];
@@ -1769,7 +1769,7 @@ static struct platform_device apq8064_device_ext_mpp8_vreg __devinitdata = {
 			= &apq8064_gpio_regulator_pdata[GPIO_VREG_ID_EXT_MPP8],
 	},
 };
-#endif /* CONFIG_USB_OTG */
+#endif /*                */
 
 static struct platform_device apq8064_device_rpm_regulator __devinitdata = {
 	.name	= "rpm-regulator",
@@ -1820,7 +1820,7 @@ static struct platform_device *pm8921_common_devices[] __initdata = {
 #ifdef CONFIG_USB_OTG
 	&apq8064_device_ext_5v_vreg,
 	&apq8064_device_ext_mpp8_vreg,
-#endif /* CONFIG_USB_OTG */
+#endif /*                */
 	&apq8064_device_ssbi_pmic1,
 	&apq8064_device_ssbi_pmic2,
 #ifdef LIGHTMIN_REMOVE
@@ -1831,7 +1831,7 @@ static struct platform_device *pm8921_common_devices[] __initdata = {
 static struct platform_device *pm8917_common_devices[] __initdata = {
 #ifdef CONFIG_USB_OTG
 	&apq8064_device_ext_mpp8_vreg,
-#endif /* CONFIG_USB_OTG */
+#endif /*                */
 	&apq8064_device_ssbi_pmic1,
 	&apq8064_device_ssbi_pmic2,
 #ifdef LIGHTMIN_REMOVE
@@ -1855,8 +1855,8 @@ static struct platform_device *common_devices[] __initdata = {
 	&apq8064_android_pmem_device,
 	&apq8064_android_pmem_adsp_device,
 	&apq8064_android_pmem_audio_device,
-#endif /*CONFIG_MSM_MULTIMEDIA_USE_ION*/
-#endif /*CONFIG_ANDROID_PMEM*/
+#endif /*                             */
+#endif /*                   */
 #ifdef CONFIG_ION_MSM
 	&apq8064_ion_dev,
 #endif
@@ -1990,7 +1990,7 @@ static struct slim_boardinfo apq8064_slim_devices[] = {
 		.bus_num = 1,
 		.slim_slave = &apq8064_slim_tabla20,
 	},
-	/* add more slimbus slaves as needed */
+	/*                                   */
 };
 
 static struct msm_i2c_platform_data apq8064_i2c_qup_gsbi1_pdata = {
@@ -2027,7 +2027,7 @@ static void __init apq8064_i2c_init(void)
 
 	gsbi_mem = ioremap_nocache(MSM_GSBI1_PHYS, 4);
 	writel_relaxed(GSBI_DUAL_MODE_CODE, gsbi_mem);
-	/* Ensure protocol code is written before proceeding */
+	/*                                                   */
 	wmb();
 	iounmap(gsbi_mem);
 	apq8064_i2c_qup_gsbi1_pdata.use_gsbi_shared_mode = 1;
@@ -2043,7 +2043,7 @@ static void __init apq8064_i2c_init(void)
 	apq8064_i2c_qup_gsbi7_pdata.use_gsbi_shared_mode = 1;
 #endif
 
-	/* Setting protocol code to 0x60 for dual UART/I2C in GSBI4 */
+	/*                                                          */
 	gsbi_mem = ioremap_nocache(MSM_GSBI4_PHYS, 4);
 	if (lge_get_uart_mode()) {
 		writel_relaxed(GSBI_DUAL_MODE_CODE, gsbi_mem);
@@ -2055,7 +2055,7 @@ static void __init apq8064_i2c_init(void)
 	iounmap(gsbi_mem);
 }
 
-/* Sensors DSPS platform data */
+/*                            */
 #define DSPS_PIL_GENERIC_NAME		"dsps"
 static void __init apq8064_init_dsps(void)
 {
@@ -2099,7 +2099,7 @@ static void __init apq8064ab_update_retention_spm(void)
 {
 	int i;
 
-	/* Update the SPM sequences for krait retention on all cores */
+	/*                                                           */
 	for (i = 0; i < ARRAY_SIZE(msm_spm_data); i++) {
 		int j;
 		struct msm_spm_platform_data *pdata = &msm_spm_data[i];
