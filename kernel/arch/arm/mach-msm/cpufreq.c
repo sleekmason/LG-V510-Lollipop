@@ -49,10 +49,6 @@ struct cpu_freq {
 
 static DEFINE_PER_CPU(struct cpu_freq, cpu_freq_info);
 
-#ifdef CONFIG_TURBO_BOOST
-extern int msm_turbo(int);
-#endif
-
 static int set_cpu_freq(struct cpufreq_policy *policy, unsigned int new_freq)
 {
 	int ret = 0;
@@ -70,10 +66,6 @@ static int set_cpu_freq(struct cpufreq_policy *policy, unsigned int new_freq)
 			pr_debug("min: limiting freq to %d\n", new_freq);
 		}
 	}
-
-#ifdef CONFIG_TURBO_BOOST
-	new_freq = msm_turbo(new_freq);
-#endif
 
 	freqs.old = policy->cur;
 	freqs.new = new_freq;
@@ -200,10 +192,6 @@ int msm_cpufreq_set_freq_limits(uint32_t cpu, uint32_t min, uint32_t max)
 }
 EXPORT_SYMBOL(msm_cpufreq_set_freq_limits);
 
-#ifdef CONFIG_LOW_CPUCLOCKS
-#define LOW_CPUCLOCKS_FREQ_MIN	162000
-#endif
-
 static int __cpuinit msm_cpufreq_init(struct cpufreq_policy *policy)
 {
 	int cur_freq;
@@ -223,20 +211,12 @@ static int __cpuinit msm_cpufreq_init(struct cpufreq_policy *policy)
 
 	if (cpufreq_frequency_table_cpuinfo(policy, table)) {
 #ifdef CONFIG_MSM_CPU_FREQ_SET_MIN_MAX
-#ifdef CONFIG_LOW_CPUCLOCKS
-	policy->cpuinfo.min_freq = LOW_CPUCLOCKS_FREQ_MIN;
-#else
 		policy->cpuinfo.min_freq = CONFIG_MSM_CPU_FREQ_MIN;
-#endif
 		policy->cpuinfo.max_freq = CONFIG_MSM_CPU_FREQ_MAX;
 #endif
 	}
 #ifdef CONFIG_MSM_CPU_FREQ_SET_MIN_MAX
-#ifdef CONFIG_LOW_CPUCLOCKS
-policy->min = LOW_CPUCLOCKS_FREQ_MIN;
-#else
-policy->min = CONFIG_MSM_CPU_FREQ_MIN;
-#endif
+	policy->min = CONFIG_MSM_CPU_FREQ_MIN;
 	policy->max = CONFIG_MSM_CPU_FREQ_MAX;
 #endif
 
