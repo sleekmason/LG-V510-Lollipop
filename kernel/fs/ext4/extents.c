@@ -2460,7 +2460,9 @@ ext4_ext_rm_leaf(handle_t *handle, struct inode *inode,
 		int flags = EXT4_FREE_BLOCKS_FORGET;
 
 		if (S_ISDIR(inode->i_mode) || S_ISLNK(inode->i_mode))
-			flags |= EXT4_FREE_BLOCKS_METADATA;
+			flags |= EXT4_FREE_BLOCKS_METADATA | EXT4_FREE_BLOCKS_FORGET;
+		else if (ext4_should_journal_data(inode))
+			flags |= EXT4_FREE_BLOCKS_FORGET;
 
 		ext4_free_blocks(handle, inode, NULL,
 				 EXT4_C2B(sbi, *partial_cluster),
