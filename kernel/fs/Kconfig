@@ -224,6 +224,7 @@ source "fs/pstore/Kconfig"
 source "fs/sysv/Kconfig"
 source "fs/ufs/Kconfig"
 source "fs/exofs/Kconfig"
+source "fs/f2fs/Kconfig"
 
 endif # MISC_FILESYSTEMS
 
@@ -285,5 +286,4 @@ config AIO_OPTIMIZATION
 	default y
 	help
 	  An experimental AIO FS kernel optimization
-
 endmenu
