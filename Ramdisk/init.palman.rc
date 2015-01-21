@@ -126,7 +126,7 @@ on boot
     write /proc/sys/net/core/wmem_max  1220608
 
 # enable exfat feature
-    insmod /system/lib/modules/texfat.ko
+    insmod /system/lib/modules/exfat.ko
 
 # msm specific files that need to be created on /data
 on post-fs-data
