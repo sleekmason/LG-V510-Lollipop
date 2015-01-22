@@ -2457,7 +2457,7 @@ ext4_ext_rm_leaf(handle_t *handle, struct inode *inode,
 	if (*partial_cluster && ex >= EXT_FIRST_EXTENT(eh) &&
 	    (EXT4_B2C(sbi, ext4_ext_pblock(ex) + ex_ee_len - 1) !=
 	     *partial_cluster)) {
-		int flags = EXT4_FREE_BLOCKS_FORGET;
+		int flags = 0;
 
 		if (S_ISDIR(inode->i_mode) || S_ISLNK(inode->i_mode))
 			flags |= EXT4_FREE_BLOCKS_METADATA | EXT4_FREE_BLOCKS_FORGET;
